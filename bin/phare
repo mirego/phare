@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require 'phare'
 
 if ENV['SKIP_CODE_CHECK']
-    puts '--------------------------------------------------------'
-    puts 'Skipping code style checking… Really? Well alright then…'
-    puts '--------------------------------------------------------'
+  puts '--------------------------------------------------------'
+  puts 'Skipping code style checking… Really? Well alright then…'
+  puts '--------------------------------------------------------'
 else
   if Phare::CLI.new(Dir.getwd).tap { |c| c.run }.status == 0
     puts ''
