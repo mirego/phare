@@ -1,29 +1,29 @@
-require 'English'
-
 module Phare
   class CLI
-    attr_reader :status
+    def initialize(env)
+      if env['SKIP_CODE_CHECK']
+        puts '--------------------------------------------------------'
+        puts 'Skipping code style checking… Really? Well alright then…'
+        puts '--------------------------------------------------------'
 
-    def initialize(directory)
-      @directory = directory
-      @directory << '/' unless @directory.end_with?('/')
-    end
+        exit 0
+      else
+        if Phare::Check.new(Dir.getwd).tap { |c| c.run }.status == 0
+          puts ''
+          puts '------------------------------------------'
+          puts 'Everything looks good, keep on committing!'
+          puts '------------------------------------------'
 
-    def run
-      ruby = Checks::RubyRubocop.new
-      ruby.run
+          exit 0
+        else
+          puts ''
+          puts '------------------------------------------------------------------------'
+          puts 'Something’s wrong with your code style. Please fix it before committing.'
+          puts '------------------------------------------------------------------------'
 
-      puts ''
-
-      jshint = Checks::JavaScriptJSHint.new(@directory)
-      jshint.run
-
-      puts ''
-
-      jscs = Checks::JavaScriptJSCS.new(@directory)
-      jscs.run
-
-      @status = [ruby.status, jshint.status, jscs.status].find { |status| status > 0 } || 0
+          exit 1
+        end
+      end
     end
   end
 end

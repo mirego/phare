@@ -4,22 +4,4 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require 'phare'
 
-if ENV['SKIP_CODE_CHECK']
-  puts '--------------------------------------------------------'
-  puts 'Skipping code style checking… Really? Well alright then…'
-  puts '--------------------------------------------------------'
-else
-  if Phare::CLI.new(Dir.getwd).tap { |c| c.run }.status == 0
-    puts ''
-    puts '------------------------------------------'
-    puts 'Everything looks good, keep on committing!'
-    puts '------------------------------------------'
-    exit 0
-  else
-    puts ''
-    puts '------------------------------------------------------------------------'
-    puts 'Something’s wrong with your code style. Please fix it before committing.'
-    puts '------------------------------------------------------------------------'
-    exit 1
-  end
-end
+Phare::CLI.new(ENV)
