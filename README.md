@@ -2,10 +2,12 @@
 
 ## Installation
 
-Add this line to your application’s Gemfile:
+Add this line to your application’s Gemfile as a development dependancy:
 
 ```ruby
-gem 'phare'
+group :development do
+  gem 'phare'
+end
 ```
 
 If you wish to check for JavaScript code style using JSHint and JSCS, you must install them too:
