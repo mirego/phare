@@ -9,14 +9,12 @@ module Phare
         exit 0
       else
         if Phare::Check.new(Dir.getwd).tap { |c| c.run }.status == 0
-          puts ''
           puts '------------------------------------------'
           puts 'Everything looks good, keep on committing!'
           puts '------------------------------------------'
 
           exit 0
         else
-          puts ''
           puts '------------------------------------------------------------------------'
           puts 'Something’s wrong with your code style. Please fix it before committing.'
           puts '------------------------------------------------------------------------'

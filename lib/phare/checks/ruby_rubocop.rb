@@ -5,19 +5,34 @@ module Phare
 
       def initialize
         @command = 'bundle exec rubocop'
-
-        puts '----------------------------------------'
-        puts 'Running Rubocop to check for Ruby style…'
-        puts '----------------------------------------'
       end
 
       def run
-        system(@command)
-        @status = $CHILD_STATUS.exitstatus
+        if should_run?
+          print_banner
+          system(@command)
+          @status = $CHILD_STATUS.exitstatus
 
-        unless @status == 0
-          puts "Something went wrong. Program exited with #{@status}"
+          unless @status == 0
+            puts "Something went wrong. Program exited with #{@status}"
+          end
+
+          puts ''
+        else
+          @status = 0
         end
+      end
+
+    protected
+
+      def should_run?
+        !`which rubocop`.empty?
+      end
+
+      def print_banner
+        puts '----------------------------------------'
+        puts 'Running Rubocop to check for Ruby style…'
+        puts '----------------------------------------'
       end
     end
   end

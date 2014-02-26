@@ -11,12 +11,8 @@ module Phare
       ruby = Checks::RubyRubocop.new
       ruby.run
 
-      puts ''
-
       jshint = Checks::JavaScriptJSHint.new(@directory)
       jshint.run
-
-      puts ''
 
       jscs = Checks::JavaScriptJSCS.new(@directory)
       jscs.run
