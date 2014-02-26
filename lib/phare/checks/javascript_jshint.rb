@@ -11,6 +11,7 @@ module Phare
 
       def run
         if should_run?
+          print_banner
           system(@command)
           @status = $CHILD_STATUS.exitstatus
 
