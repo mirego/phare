@@ -11,6 +11,9 @@ module Phare
       ruby = Checks::RubyRubocop.new
       ruby.run
 
+      scsslint = Checks::ScssLint.new(@directory)
+      scsslint.run
+
       jshint = Checks::JavaScriptJSHint.new(@directory)
       jshint.run
 
