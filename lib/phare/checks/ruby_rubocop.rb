@@ -4,7 +4,7 @@ module Phare
       attr_reader :status
 
       def initialize
-        @command = 'bundle exec rubocop'
+        @command = 'rubocop'
       end
 
       def run
