@@ -1,14 +1,26 @@
-# Phare
+<p align="center">
+  <a href="https://github.com/mirego/phare">
+    <img src="http://i.imgur.com/9Pa2RgE.png" alt="Phare" />
+  </a>
+  <br />
+  Phare looks into your files and check for coding style errors. 
+  <br /><br />
+  <a href="https://rubygems.org/gems/phare"><img src="https://badge.fury.io/rb/phare.png" /></a>
+</p>
 
 ## Installation
 
-Add this line to your application’s Gemfile as a development dependancy:
+Add these lines to your application’s Gemfile as development dependancies:
 
 ```ruby
 group :development do
+  gem 'rubocop' # to check Ruby code
+  gem 'scss-lint' # to check SCSS code
+
   gem 'phare'
 end
 ```
+
 
 If you wish to check for JavaScript code style using JSHint and JSCS, you must install them too:
 
