@@ -5,8 +5,7 @@ module Phare
 
       def initialize(directory)
         @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
-        @glob = File.join(@path, '**/*.css.scss')
-        @command = "scss-lint #{@glob}"
+        @command = "scss-lint #{@path}"
       end
 
       def run
