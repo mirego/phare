@@ -4,8 +4,9 @@ module Phare
       attr_reader :status
 
       def initialize(directory)
-        @path = File.expand_path("#{directory}app/assets/**/*.css.scss", __FILE__)
-        @command = "scss-lint #{@path}"
+        @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
+        @glob = File.join(@path, '**/*.css.scss')
+        @command = "scss-lint #{@glob}"
       end
 
       def run
@@ -29,7 +30,7 @@ module Phare
     protected
 
       def should_run?
-        !`which scss-lint`.empty?
+        !`which scss-lint`.empty? && Dir.exists?(@path)
       end
 
       def print_banner

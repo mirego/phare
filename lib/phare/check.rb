@@ -8,19 +8,21 @@ module Phare
     end
 
     def run
-      ruby = Checks::RubyRubocop.new
+      @checks = []
+
+      @checks << ruby = Checks::RubyRubocop.new
       ruby.run
 
-      scsslint = Checks::ScssLint.new(@directory)
+      @checks << scsslint = Checks::ScssLint.new(@directory)
       scsslint.run
 
-      jshint = Checks::JavaScriptJSHint.new(@directory)
+      @checks << jshint = Checks::JavaScriptJSHint.new(@directory)
       jshint.run
 
-      jscs = Checks::JavaScriptJSCS.new(@directory)
+      @checks << jscs = Checks::JavaScriptJSCS.new(@directory)
       jscs.run
 
-      @status = [ruby.status, jshint.status, jscs.status].find { |status| status > 0 } || 0
+      @status = @checks.map!(&:status).find { |status| status > 0 } || 0
     end
   end
 end

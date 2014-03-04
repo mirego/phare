@@ -28,7 +28,7 @@ module Phare
     protected
 
       def should_run?
-        !`which jscs`.empty? && File.exists?(@config)
+        !`which jscs`.empty? && File.exists?(@config) && Dir.exists?(@path)
       end
 
       def print_banner

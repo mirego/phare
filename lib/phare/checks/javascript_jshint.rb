@@ -5,8 +5,9 @@ module Phare
 
       def initialize(directory)
         @config = File.expand_path("#{directory}.jshintrc", __FILE__)
-        @path = File.expand_path("#{directory}app/assets/javascripts/**/*", __FILE__)
-        @command = "jshint --config #{@config} --extra-ext .js,.es6.js #{@path}"
+        @path = File.expand_path("#{directory}app/assets/javascripts", __FILE__)
+        @glob = File.join(@path, '**/*')
+        @command = "jshint --config #{@config} --extra-ext .js,.es6.js #{@glob}"
       end
 
       def run
@@ -30,7 +31,7 @@ module Phare
     protected
 
       def should_run?
-        !`which jshint`.empty? && File.exists?(@config)
+        !`which jshint`.empty? && File.exists?(@config) && Dir.exists?(@path)
       end
 
       def print_banner
