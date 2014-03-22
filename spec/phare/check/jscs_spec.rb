@@ -16,7 +16,7 @@ describe Phare::Check::JSCS do
       it { expect(check).to be_able_to_run }
     end
 
-    context 'with unfound rubocop command' do
+    context 'with unfound jscs command' do
       let(:which_output) { '' }
       let(:config_exists?) { false }
       let(:path_exists?) { false }

@@ -16,7 +16,7 @@ describe Phare::Check::JSHint do
       it { expect(check).to be_able_to_run }
     end
 
-    context 'with unfound rubocop command' do
+    context 'with unfound jshint command' do
       let(:which_output) { '' }
       let(:config_exists?) { false }
       let(:path_exists?) { false }
