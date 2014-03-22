@@ -1,12 +1,10 @@
 module Phare
   module Checks
-    class JavaScriptJSCS
+    class Rubocop
       attr_reader :status
 
-      def initialize(directory)
-        @config = File.expand_path("#{directory}.jscs.json", __FILE__)
-        @path = File.expand_path("#{directory}app/assets", __FILE__)
-        @command = "jscs #{@path}"
+      def initialize
+        @command = 'rubocop'
       end
 
       def run
@@ -28,13 +26,13 @@ module Phare
     protected
 
       def should_run?
-        !`which jscs`.empty? && File.exists?(@config) && Dir.exists?(@path)
+        !`which rubocop`.empty?
       end
 
       def print_banner
-        puts '---------------------------------------------'
-        puts 'Running JSCS to check for JavaScript style…'
-        puts '---------------------------------------------'
+        puts '----------------------------------------'
+        puts 'Running Rubocop to check for Ruby style…'
+        puts '----------------------------------------'
       end
     end
   end

@@ -10,16 +10,16 @@ module Phare
     def run
       @checks = []
 
-      @checks << Checks::RubyRubocop.new
+      @checks << Checks::Rubocop.new
       @checks.last.run
 
       @checks << Checks::ScssLint.new(@directory)
       @checks.last.run
 
-      @checks << Checks::JavaScriptJSHint.new(@directory)
+      @checks << Checks::JSHint.new(@directory)
       @checks.last.run
 
-      @checks << Checks::JavaScriptJSCS.new(@directory)
+      @checks << Checks::JSCS.new(@directory)
       @checks.last.run
 
       @status = @checks.map!(&:status).find { |status| status > 0 } || 0

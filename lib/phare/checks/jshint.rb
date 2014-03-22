@@ -1,6 +1,6 @@
 module Phare
   module Checks
-    class JavaScriptJSHint
+    class JSHint
       attr_reader :status
 
       def initialize(directory)
