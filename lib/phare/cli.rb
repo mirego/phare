@@ -15,7 +15,7 @@ module Phare
 
         exit 0
       else
-        if @suite.tap { |suite| suite.run }.status == 0
+        if @suite.tap(&:run).status == 0
           Phare.puts '------------------------------------------'
           Phare.puts 'Everything looks good, keep on committing!'
           Phare.puts '------------------------------------------'

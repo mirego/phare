@@ -11,7 +11,7 @@ module Phare
 
     def run
       @checks = CHECKS.map do |check|
-        check.new(@directory).tap { |c| c.run }.status
+        check.new(@directory).tap(&:run).status
       end
 
       @status = @checks.find { |status| status > 0 } || 0
