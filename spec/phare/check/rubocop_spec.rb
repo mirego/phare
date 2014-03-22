@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Phare::Check::Rubocop do
   describe :should_run? do
-    let(:check) { described_class.new }
+    let(:check) { described_class.new('.') }
     before { expect(Phare).to receive(:system_output).with('which rubocop').and_return(which_output) }
 
     context 'with found rubocop command' do
@@ -17,7 +17,7 @@ describe Phare::Check::Rubocop do
   end
 
   describe :run do
-    let(:check) { described_class.new }
+    let(:check) { described_class.new('.') }
     let(:run!) { check.run }
 
     context 'with available Rubocop' do

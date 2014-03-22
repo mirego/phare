@@ -6,25 +6,10 @@ module Phare
 
       def initialize(directory)
         @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
-        @command = "scss-lint #{@path}"
       end
 
-      def run
-        if should_run?
-          print_banner
-          Phare.system(@command)
-          @status = Phare.last_exit_status
-
-          if @status == 0
-            Phare.puts 'No code style errors found.'
-          else
-            Phare.puts "Something went wrong. Program exited with #{@status}"
-          end
-
-          Phare.puts ''
-        else
-          @status = 0
-        end
+      def command
+        "scss-lint #{@path}"
       end
 
     protected

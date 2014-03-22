@@ -7,23 +7,10 @@ module Phare
       def initialize(directory)
         @config = File.expand_path("#{directory}.jscs.json", __FILE__)
         @path = File.expand_path("#{directory}app/assets", __FILE__)
-        @command = "jscs #{@path}"
       end
 
-      def run
-        if should_run?
-          print_banner
-          Phare.system(@command)
-          @status = Phare.last_exit_status
-
-          unless @status == 0
-            Phare.puts "Something went wrong. Program exited with #{@status}"
-          end
-
-          Phare.puts ''
-        else
-          @status = 0
-        end
+      def command
+        "jscs #{@path}"
       end
 
     protected

@@ -2,24 +2,12 @@
 module Phare
   class Check
     class Rubocop < Check
-      def initialize(*args)
-        @command = 'rubocop'
+      def initialize(directory)
+        @path = directory
       end
 
-      def run
-        if should_run?
-          print_banner
-          Phare.system(@command)
-          @status = Phare.last_exit_status
-
-          unless @status == 0
-            Phare.puts "Something went wrong. Program exited with #{@status}"
-          end
-
-          Phare.puts ''
-        else
-          @status = 0
-        end
+      def command
+        'rubocop'
       end
 
     protected
