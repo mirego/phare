@@ -1,8 +1,6 @@
 module Phare
-  module Checks
-    class JSHint
-      attr_reader :status
-
+  class Check
+    class JSHint < Check
       def initialize(directory)
         @config = File.expand_path("#{directory}.jshintrc", __FILE__)
         @path = File.expand_path("#{directory}app/assets/javascripts", __FILE__)

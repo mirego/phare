@@ -1,8 +1,6 @@
 module Phare
-  module Checks
-    class ScssLint
-      attr_reader :status
-
+  class Check
+    class ScssLint < Check
       def initialize(directory)
         @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
         @command = "scss-lint #{@path}"

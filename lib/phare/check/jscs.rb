@@ -1,8 +1,6 @@
 module Phare
-  module Checks
-    class JSCS
-      attr_reader :status
-
+  class Check
+    class JSCS < Check
       def initialize(directory)
         @config = File.expand_path("#{directory}.jscs.json", __FILE__)
         @path = File.expand_path("#{directory}app/assets", __FILE__)

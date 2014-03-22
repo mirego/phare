@@ -1,8 +1,6 @@
 module Phare
-  module Checks
-    class Rubocop
-      attr_reader :status
-
+  class Check
+    class Rubocop < Check
       def initialize
         @command = 'rubocop'
       end

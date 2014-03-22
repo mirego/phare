@@ -8,7 +8,7 @@ module Phare
 
         exit 0
       else
-        if Phare::Check.new(Dir.getwd).tap { |c| c.run }.status == 0
+        if Phare::CheckSuite.new(Dir.getwd).tap { |c| c.run }.status == 0
           puts '------------------------------------------'
           puts 'Everything looks good, keep on committing!'
           puts '------------------------------------------'
