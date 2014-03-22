@@ -37,7 +37,7 @@ Phare provides an executable named `phare`. You can just use it as is:
 $ phare
 ```
 
-One of the best way to use Phare is by hooking it before your version control commits. For example, with `git`:
+One of the best ways to use Phare is by hooking it to your version control commit process. For example, with `git`:
 
 ```bash
 $ bundle binstubs phare
