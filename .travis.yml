@@ -4,7 +4,9 @@ rvm:
   - 2.0.0
   - 1.9.3
 
-script: "echo 'DO IT' && bundle exec rake spec"
+script:
+  - 'echo "Checking code style" && ./bin/phare'
+  - 'echo "Running specs" && bundle exec rake spec'
 
 notifications:
   hipchat:
