@@ -4,4 +4,4 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require 'phare'
 
-Phare::CLI.new(ENV).run
+Phare::CLI.new(ENV, ARGV).run

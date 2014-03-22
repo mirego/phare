@@ -1,4 +1,5 @@
 require 'English'
+require 'optparse'
 require 'phare/version'
 
 require 'phare/cli'

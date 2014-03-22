@@ -2,15 +2,38 @@ module Phare
   class CheckSuite
     attr_reader :status
 
-    CHECKS = [Check::Rubocop, Check::ScssLint, Check::JSHint, Check::JSCS]
+    DEFAULT_CHECKS = {
+      rubocop: Check::Rubocop,
+      scsslint: Check::ScssLint,
+      jshint: Check::JSHint,
+      jscs: Check::JSCS
+    }
 
-    def initialize(directory)
-      @directory = directory
+    def initialize(options = {})
+      @options = options
+
+      @directory = options[:directory]
       @directory << '/' unless @directory.end_with?('/')
+
+      @options[:skip] ||= []
+      @options[:only] ||= []
+    end
+
+    def checks
+      checks = DEFAULT_CHECKS.keys
+
+      if @options[:only].any?
+        checks = checks & @options[:only]
+      elsif @options[:skip]
+        checks = checks - @options[:skip]
+      else
+        checks
+      end
     end
 
     def run
-      @checks = CHECKS.map do |check|
+      @checks = checks.map do |check|
+        check = DEFAULT_CHECKS[check]
         check.new(@directory).tap(&:run).status
       end
 
