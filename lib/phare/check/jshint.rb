@@ -16,10 +16,6 @@ module Phare
 
     protected
 
-      def print_error_message
-        Phare.puts 'No code style errors found.'
-      end
-
       def should_run?
         !Phare.system_output('which jshint').empty? && File.exists?(@config) && Dir.exists?(@path)
       end

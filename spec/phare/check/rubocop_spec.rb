@@ -35,7 +35,7 @@ describe Phare::Check::Rubocop do
 
       context 'without check errors' do
         let(:rubocop_exit_status) { 1337 }
-        before { expect(Phare).to receive(:puts).with("Something went wrong. Program exited with #{rubocop_exit_status}") }
+        before { expect(Phare).to receive(:puts).with("Something went wrong. Program exited with #{rubocop_exit_status}.") }
         it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
       end
     end
