@@ -1,23 +1,30 @@
 module Phare
   class CLI
+    attr_reader :suite
+
     def initialize(env)
-      if env['SKIP_CODE_CHECK']
-        puts '--------------------------------------------------------'
-        puts 'Skipping code style checking… Really? Well alright then…'
-        puts '--------------------------------------------------------'
+      @env = env
+      @suite = Phare::CheckSuite.new(Dir.getwd)
+    end
+
+    def run
+      if @env['SKIP_CODE_CHECK']
+        Phare.puts '--------------------------------------------------------'
+        Phare.puts 'Skipping code style checking… Really? Well alright then…'
+        Phare.puts '--------------------------------------------------------'
 
         exit 0
       else
-        if Phare::CheckSuite.new(Dir.getwd).tap { |c| c.run }.status == 0
-          puts '------------------------------------------'
-          puts 'Everything looks good, keep on committing!'
-          puts '------------------------------------------'
+        if @suite.tap(&:run).status == 0
+          Phare.puts '------------------------------------------'
+          Phare.puts 'Everything looks good, keep on committing!'
+          Phare.puts '------------------------------------------'
 
           exit 0
         else
-          puts '------------------------------------------------------------------------'
-          puts 'Something’s wrong with your code style. Please fix it before committing.'
-          puts '------------------------------------------------------------------------'
+          Phare.puts '------------------------------------------------------------------------'
+          Phare.puts 'Something’s wrong with your code style. Please fix it before committing.'
+          Phare.puts '------------------------------------------------------------------------'
 
           exit 1
         end
