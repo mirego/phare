@@ -39,13 +39,13 @@ describe Phare::Check::JSHint do
       context 'with check errors' do
         let(:jshint_exit_status) { 0 }
         before { expect(Phare).to receive(:puts).with('No code style errors found.') }
-        it { expect { run! }.to change { check.status }.to(0) }
+        it { expect { run! }.to change { check.status }.to(jshint_exit_status) }
       end
 
       context 'without check errors' do
         let(:jshint_exit_status) { 1337 }
-        before { expect(Phare).to receive(:puts).with('Something went wrong. Program exited with 1337') }
-        it { expect { run! }.to change { check.status }.to(1337) }
+        before { expect(Phare).to receive(:puts).with("Something went wrong. Program exited with #{jshint_exit_status}") }
+        it { expect { run! }.to change { check.status }.to(jshint_exit_status) }
       end
     end
 
