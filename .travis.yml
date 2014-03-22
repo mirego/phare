@@ -1,0 +1,15 @@
+language: ruby
+
+rvm:
+  - 2.0.0
+  - 1.9.3
+
+script: "echo 'DO IT' && bundle exec rake spec"
+
+notifications:
+  hipchat:
+    rooms:
+      secure: "OjYHtwmsG6bDC8mewX85yulCKxsVpvGiic32e6lDRq2TYmMtot/atOQaZ16YlMMN0CQqiJ8jfpil3HWCSK1iPZxSLHzCEu//bL6uoDJdPc/oXNV2BPAj0CxyHiJPpV3gdgdnZBbYGNdDPtjxo8FuZnM+cWIDl3yW0Y2rQkE7u0k="
+    template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Build</a>/<a href="%{compare_url}">Changes</a>)'
+    format: 'html'

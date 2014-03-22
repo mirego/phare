@@ -1,3 +1,4 @@
+# encoding: utf-8
 module Phare
   class Check
     class ScssLint < Check
