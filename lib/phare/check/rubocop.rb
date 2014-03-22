@@ -1,21 +1,21 @@
 module Phare
   class Check
     class Rubocop < Check
-      def initialize
+      def initialize(*args)
         @command = 'rubocop'
       end
 
       def run
         if should_run?
           print_banner
-          system(@command)
-          @status = $CHILD_STATUS.exitstatus
+          Phare.system(@command)
+          @status = Phare.last_exit_status
 
           unless @status == 0
-            puts "Something went wrong. Program exited with #{@status}"
+            Phare.puts "Something went wrong. Program exited with #{@status}"
           end
 
-          puts ''
+          Phare.puts ''
         else
           @status = 0
         end
@@ -24,13 +24,13 @@ module Phare
     protected
 
       def should_run?
-        !`which rubocop`.empty?
+        !Phare.system_output('which rubocop').empty?
       end
 
       def print_banner
-        puts '----------------------------------------'
-        puts 'Running Rubocop to check for Ruby style…'
-        puts '----------------------------------------'
+        Phare.puts '----------------------------------------'
+        Phare.puts 'Running Rubocop to check for Ruby style…'
+        Phare.puts '----------------------------------------'
       end
     end
   end

@@ -1,6 +1,8 @@
 module Phare
   class Check
     class ScssLint < Check
+      attr_reader :path
+
       def initialize(directory)
         @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
         @command = "scss-lint #{@path}"
@@ -9,16 +11,16 @@ module Phare
       def run
         if should_run?
           print_banner
-          system(@command)
-          @status = $CHILD_STATUS.exitstatus
+          Phare.system(@command)
+          @status = Phare.last_exit_status
 
           if @status == 0
-            puts 'No code style errors found.'
+            Phare.puts 'No code style errors found.'
           else
-            puts "Something went wrong. Program exited with #{@status}"
+            Phare.puts "Something went wrong. Program exited with #{@status}"
           end
 
-          puts ''
+          Phare.puts ''
         else
           @status = 0
         end
@@ -27,13 +29,13 @@ module Phare
     protected
 
       def should_run?
-        !`which scss-lint`.empty? && Dir.exists?(@path)
+        !Phare.system_output('which scss-lint').empty? && Dir.exists?(@path)
       end
 
       def print_banner
-        puts '------------------------------------------'
-        puts 'Running SCSS-Lint to check for SCSS style…'
-        puts '------------------------------------------'
+        Phare.puts '------------------------------------------'
+        Phare.puts 'Running SCSS-Lint to check for SCSS style…'
+        Phare.puts '------------------------------------------'
       end
     end
   end
