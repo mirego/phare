@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Phare::CLI do
-  let(:cli) { described_class.new(env) }
+  let(:cli) { described_class.new(env, argv) }
+  let(:argv) { [] }
   let(:run!) { cli.run }
 
   describe :initialize do

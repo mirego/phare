@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe Phare::CheckSuite do
   describe :run do
-    let(:suite) { described_class.new('.') }
+    let(:options) { { directory: '.' } }
+    let(:suite) { described_class.new(options) }
 
     before do
-      Phare::CheckSuite::CHECKS.each_with_index do |check, index|
+      Phare::CheckSuite::DEFAULT_CHECKS.values.each_with_index do |check, index|
         exit_status = exit_status_proc.call(index)
         allow_any_instance_of(check).to receive(:run)
         allow_any_instance_of(check).to receive(:status).and_return(exit_status)
@@ -32,6 +33,33 @@ describe Phare::CheckSuite do
       let(:exit_status_proc) { proc { |index| 0 } }
 
       it { expect { suite.run }.to change { suite.status }.to(0) }
+    end
+  end
+
+  describe :checks do
+    let(:options) { { directory: '.', skip: skip, only: only } }
+    let(:suite) { described_class.new(options) }
+    let(:skip) { [] }
+    let(:only) { [] }
+
+    context 'with "only" option' do
+      let(:only) { [:rubocop, :foo, :jshint] }
+      it { expect(suite.checks).to eql [:rubocop, :jshint] }
+    end
+
+    context 'with "skip" option' do
+      let(:skip) { [:scsslint, :foo, :jshint] }
+      it { expect(suite.checks).to eql [:rubocop, :jscs] }
+    end
+
+    context 'with both "only" and "skip" option' do
+      let(:skip) { [:scsslint, :rubocop] }
+      let(:only) { [:scsslint, :foo, :jshint] }
+      it { expect(suite.checks).to eql [:scsslint, :jshint] }
+    end
+
+    context 'with both "only" and "skip" option' do
+      it { expect(suite.checks).to eql Phare::CheckSuite::DEFAULT_CHECKS.keys }
     end
   end
 end
