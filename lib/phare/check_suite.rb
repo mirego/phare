@@ -34,7 +34,7 @@ module Phare
     def run
       @checks = checks.map do |check|
         check = DEFAULT_CHECKS[check]
-        check.new(@directory).tap(&:run).status
+        check.new(@directory, @options).tap(&:run).status
       end
 
       @status = @checks.find { |status| status > 0 } || 0

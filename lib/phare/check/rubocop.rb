@@ -2,17 +2,23 @@
 module Phare
   class Check
     class Rubocop < Check
-      def initialize(directory)
+      def initialize(directory, options = {})
         @path = directory
+        @extensions = %w(.rb)
+        @options = options
       end
 
       def command
-        'rubocop'
+        if tree_changed?
+          "rubocop #{tree_changes.join(' ')}"
+        else
+          'rubocop'
+        end
       end
 
     protected
 
-      def should_run?
+      def binary_exists?
         !Phare.system_output('which rubocop').empty?
       end
 

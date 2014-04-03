@@ -53,6 +53,10 @@ module Phare
           @options[:only] = checks.split(',').map(&:to_sym)
         end
 
+        opts.on('--diff', 'Only run checks on modified files') do
+          @options[:diff] = true
+        end
+
       end.parse! @argv
     end
   end
