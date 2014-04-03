@@ -44,6 +44,11 @@ $ bundle binstubs phare
 $ ln -s "`pwd`/bin/phare" .git/hooks/pre-commit
 ```
 
+## Contributors
+
+* [@remiprev](https://github.com/remiprev)
+* [@garno](https://github.com/garno)
+
 ## License
 
 `Phare` is © 2014 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/phare/blob/master/LICENSE.md) file.
