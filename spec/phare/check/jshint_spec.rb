@@ -29,9 +29,11 @@ describe Phare::Check::JSHint do
     let(:run!) { check.run }
 
     context 'with available JSHint' do
+      let(:command) { check.command }
+
       before do
         expect(check).to receive(:should_run?).and_return(true)
-        expect(Phare).to receive(:system).with(check.command)
+        expect(Phare).to receive(:system).with(command)
         expect(Phare).to receive(:last_exit_status).and_return(jshint_exit_status)
         expect(check).to receive(:print_banner)
       end

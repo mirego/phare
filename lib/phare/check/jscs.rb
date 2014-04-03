@@ -4,19 +4,33 @@ module Phare
     class JSCS < Check
       attr_reader :config, :path
 
-      def initialize(directory)
+      def initialize(directory, options = {})
         @config = File.expand_path("#{directory}.jscs.json", __FILE__)
         @path = File.expand_path("#{directory}app/assets", __FILE__)
+        @extensions = %w(.js)
+        @options = options
       end
 
       def command
-        "jscs #{@path}"
+        if tree_changed?
+          "jscs #{tree_changes.join(' ')}"
+        else
+          "jscs #{@path}"
+        end
       end
 
     protected
 
-      def should_run?
-        !Phare.system_output('which jscs').empty? && File.exists?(@config) && Dir.exists?(@path)
+      def binary_exists?
+        !Phare.system_output('which jscs').empty?
+      end
+
+      def configuration_exists?
+        File.exists?(@config)
+      end
+
+      def argument_exists?
+        tree_changed? || Dir.exists?(@path)
       end
 
       def print_banner

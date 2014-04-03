@@ -21,9 +21,11 @@ describe Phare::Check::Rubocop do
     let(:run!) { check.run }
 
     context 'with available Rubocop' do
+      let(:command) { check.command }
+
       before do
         expect(check).to receive(:should_run?).and_return(true)
-        expect(Phare).to receive(:system).with(check.command)
+        expect(Phare).to receive(:system).with(command)
         expect(Phare).to receive(:last_exit_status).and_return(rubocop_exit_status)
         expect(check).to receive(:print_banner)
       end
@@ -36,6 +38,17 @@ describe Phare::Check::Rubocop do
       context 'without check errors' do
         let(:rubocop_exit_status) { 1337 }
         before { expect(Phare).to receive(:puts).with("Something went wrong. Program exited with #{rubocop_exit_status}.") }
+        it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
+      end
+
+      context 'with --diff option' do
+        let(:check) { described_class.new('.', diff: true) }
+        let(:files) { ['foo.rb', 'bar.rb'] }
+        let(:command) { "rubocop #{files.join(' ')}" }
+        let(:rubocop_exit_status) { 1337 }
+
+        before { expect(check).to receive(:tree_changes).and_return(files).at_least(:once) }
+
         it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
       end
     end

@@ -20,6 +20,33 @@ module Phare
       end
     end
 
+    def tree_changed?
+      @options[:diff] && tree_changes && tree_changes.any?
+    end
+
+    def tree_changes
+      @modified_files ||= Phare.system_output('git status -s').split("\n").reduce([]) do |memo, diff|
+        filename = diff.split(' ').last
+
+        memo << filename if @extensions.include?(File.extname(filename))
+        memo
+      end
+    end
+
+    def should_run?
+      should_run = binary_exists?
+
+      [:configuration_exists?, :arguments_exists?].each do |condition|
+        should_run = should_run && send(condition) if respond_to?(condition, true)
+      end
+
+      if @options[:diff]
+        should_run = should_run && tree_changed?
+      end
+
+      should_run
+    end
+
   protected
 
     def print_success_message
