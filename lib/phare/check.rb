@@ -26,9 +26,12 @@ module Phare
 
     def tree_changes
       @modified_files ||= Phare.system_output('git status -s').split("\n").reduce([]) do |memo, diff|
-        filename = diff.split(' ').last
+        action, filename = diff.split(' ')
 
-        memo << filename if @extensions.include?(File.extname(filename))
+        if action != 'D' && @extensions.include?(File.extname(filename))
+          memo << filename
+        end
+
         memo
       end
     end

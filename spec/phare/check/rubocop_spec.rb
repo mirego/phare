@@ -43,11 +43,12 @@ describe Phare::Check::Rubocop do
 
       context 'with --diff option' do
         let(:check) { described_class.new('.', diff: true) }
-        let(:files) { ['foo.rb', 'bar.rb'] }
+        let(:files) { ['untracked.rb', 'modified.rb'] }
+        let(:git_status) { "?? untracked.rb\n D deleted.rb\n M modified.rb" }
         let(:command) { "rubocop #{files.join(' ')}" }
         let(:rubocop_exit_status) { 1337 }
 
-        before { expect(check).to receive(:tree_changes).and_return(files).at_least(:once) }
+        before { expect(Phare).to receive(:system_output).with('git status -s').and_return(git_status).at_least(:once) }
 
         it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
       end
