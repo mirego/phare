@@ -8,7 +8,7 @@ module Phare
         @config = File.expand_path("#{directory}.jshintrc", __FILE__)
         @path = File.expand_path("#{directory}app/assets/javascripts", __FILE__)
         @glob = File.join(@path, '**/*')
-        @extensions = %w(.js .es6.js)
+        @extensions = %w(.js .js.es6)
         @options = options
 
         super
