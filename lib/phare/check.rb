@@ -1,6 +1,10 @@
 module Phare
   class Check
-    attr_reader :status, :command
+    attr_reader :status, :command, :tree
+
+    def initialize(directory, options = {})
+      @tree = Git.new(@extensions, options)
+    end
 
     def run
       if should_run?
@@ -20,22 +24,6 @@ module Phare
       end
     end
 
-    def tree_changed?
-      @options[:diff] && tree_changes && tree_changes.any?
-    end
-
-    def tree_changes
-      @modified_files ||= Phare.system_output('git status -s').split("\n").reduce([]) do |memo, diff|
-        action, filename = diff.split(' ')
-
-        if action != 'D' && @extensions.include?(File.extname(filename))
-          memo << filename
-        end
-
-        memo
-      end
-    end
-
     def should_run?
       should_run = binary_exists?
 
@@ -44,7 +32,7 @@ module Phare
       end
 
       if @options[:diff]
-        should_run = should_run && tree_changed?
+        should_run = should_run && @tree.changed?
       end
 
       should_run

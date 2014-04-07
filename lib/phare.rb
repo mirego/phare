@@ -3,6 +3,7 @@ require 'optparse'
 require 'phare/version'
 
 require 'phare/cli'
+require 'phare/git'
 
 require 'phare/check'
 require 'phare/check/rubocop'

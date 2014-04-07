@@ -56,7 +56,7 @@ describe Phare::Check::JSCS do
         let(:command) { "jscs #{files.join(' ')}" }
         let(:jscs_exit_status) { 1337 }
 
-        before { expect(check).to receive(:tree_changes).and_return(files).at_least(:once) }
+        before { expect(check.tree).to receive(:changes).and_return(files).at_least(:once) }
 
         it { expect { run! }.to change { check.status }.to(jscs_exit_status) }
       end

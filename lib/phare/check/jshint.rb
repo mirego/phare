@@ -10,11 +10,13 @@ module Phare
         @glob = File.join(@path, '**/*')
         @extensions = %w(.js .es6.js)
         @options = options
+
+        super
       end
 
       def command
-        if tree_changed?
-          "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{tree_changes.join(' ')}"
+        if @tree.changed?
+          "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{@tree.changes.join(' ')}"
         else
           "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{@glob}"
         end
@@ -31,7 +33,7 @@ module Phare
       end
 
       def arguments_exists?
-        tree_changed? || Dir.exists?(@path)
+        @tree.changed? || Dir.exists?(@path)
       end
 
       def print_banner
