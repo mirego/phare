@@ -8,11 +8,13 @@ module Phare
         @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
         @extensions = %w(.css .scss)
         @options = options
+
+        super
       end
 
       def command
-        if tree_changed?
-          "scss-lint #{tree_changes.join(' ')}"
+        if @tree.changed?
+          "scss-lint #{@tree.changes.join(' ')}"
         else
           "scss-lint #{@path}"
         end
@@ -25,7 +27,7 @@ module Phare
       end
 
       def arguments_exists?
-        tree_changed? || Dir.exists?(@path)
+        @tree.changed? || Dir.exists?(@path)
       end
 
       def print_banner

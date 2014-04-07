@@ -53,7 +53,7 @@ describe Phare::Check::ScssLint do
         let(:command) { "scss-lint #{files.join(' ')}" }
         let(:scsslint_exit_status) { 1337 }
 
-        before { expect(check).to receive(:tree_changes).and_return(files).at_least(:once) }
+        before { expect(check.tree).to receive(:changes).and_return(files).at_least(:once) }
 
         it { expect { run! }.to change { check.status }.to(scsslint_exit_status) }
       end

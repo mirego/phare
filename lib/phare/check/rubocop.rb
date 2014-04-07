@@ -6,11 +6,13 @@ module Phare
         @path = directory
         @extensions = %w(.rb)
         @options = options
+
+        super
       end
 
       def command
-        if tree_changed?
-          "rubocop #{tree_changes.join(' ')}"
+        if @tree.changed?
+          "rubocop #{@tree.changes.join(' ')}"
         else
           'rubocop'
         end

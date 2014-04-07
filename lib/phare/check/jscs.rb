@@ -9,11 +9,13 @@ module Phare
         @path = File.expand_path("#{directory}app/assets", __FILE__)
         @extensions = %w(.js)
         @options = options
+
+        super
       end
 
       def command
-        if tree_changed?
-          "jscs #{tree_changes.join(' ')}"
+        if @tree.changed?
+          "jscs #{@tree.changes.join(' ')}"
         else
           "jscs #{@path}"
         end
@@ -30,7 +32,7 @@ module Phare
       end
 
       def argument_exists?
-        tree_changed? || Dir.exists?(@path)
+        @tree.changed? || Dir.exists?(@path)
       end
 
       def print_banner
