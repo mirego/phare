@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Phare::Git do
+  let(:described_class) { Phare::Git }
+
   let(:extensions) { ['.rb'] }
   let(:options) { { diff: true } }
   let(:git) { described_class.new(extensions, options) }

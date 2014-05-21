@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Phare::Check::Rubocop do
+  let(:described_class) { Phare::Check::Rubocop }
+
   describe :should_run? do
     let(:check) { described_class.new('.') }
     before { expect(Phare).to receive(:system_output).with('which rubocop').and_return(which_output) }

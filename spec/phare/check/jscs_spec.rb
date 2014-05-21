@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Phare::Check::JSCS do
+  let(:described_class) { Phare::Check::JSCS }
+
   describe :should_run? do
     let(:check) { described_class.new('.') }
     before do

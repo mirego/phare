@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Phare::CheckSuite do
+  let(:described_class) { Phare::CheckSuite }
+
   describe :run do
     let(:options) { { directory: '.' } }
     let(:suite) { described_class.new(options) }

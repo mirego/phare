@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Phare::Check::ScssLint do
+  let(:described_class) { Phare::Check::ScssLint }
+
   describe :should_run? do
     let(:check) { described_class.new('.') }
     before do

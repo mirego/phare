@@ -29,6 +29,10 @@ RSpec::Matchers.define :exit_with_code do |expected_code|
     actual && actual == expected_code
   end
 
+  supports_block_expectations do
+    true
+  end
+
   failure_message do |block|
     "expected block to call exit(#{expected_code}) but exit" +
       (actual.nil? ? ' not called' : "(#{actual}) was called")
