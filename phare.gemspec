@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'phare'
   spec.version       = Phare::VERSION
   spec.authors       = ['Rémi Prévost']
-  spec.email         = ['remi@exomel.com']
+  spec.email         = ['rprevost@mirego.com']
   spec.description   = 'Phare looks into your files and check for (Ruby, JavaScript and SCSS) coding style errors.'
   spec.summary       = spec.description
   spec.homepage      = 'https://github.com/mirego/phare'
