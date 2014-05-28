@@ -38,8 +38,8 @@ module Phare
 
     def parsed_options(argv)
       options = { directory: Dir.getwd }
-      options = parse_options_from_yaml(options)
-      options = parse_options_from_arguments(options, argv)
+      options.merge! parsed_options_from_yaml(File.join(options[:directory], '.phare.yml'))
+      options.merge! parsed_options_from_arguments(argv)
 
       options[:skip].map!(&:to_sym) if options[:skip]
       options[:only].map!(&:to_sym) if options[:only]
@@ -47,48 +47,47 @@ module Phare
       options
     end
 
-    def parse_options_from_arguments(options, argv)
+    def parsed_options_from_arguments(argv)
+      options_to_merge = {}
+
       OptionParser.new do |opts|
         opts.banner = 'Usage: phare [options]'
 
         opts.on('--directory', 'The directory in which to run the checks (default is the current directory') do |directory|
-          options[:directory] = directory
+          options_to_merge[:directory] = directory
         end
 
         opts.on('--skip x,y,z', 'Skip checks') do |checks|
-          options[:skip] = checks.split(',')
+          options_to_merge[:skip] = checks.split(',')
         end
 
         opts.on('--only x,y,z', 'Only run the specified checks') do |checks|
-          options[:only] = checks.split(',')
+          options_to_merge[:only] = checks.split(',')
         end
 
         opts.on('--diff', 'Only run checks on modified files') do
-          options[:diff] = true
+          options_to_merge[:diff] = true
         end
 
       end.parse! argv
 
-      options
+      options_to_merge
     end
 
-    def parse_options_from_yaml(options)
-      file = File.join(options[:directory], '.phare.yml')
+    def parsed_options_from_yaml(file)
+      options_to_merge = {}
 
       if File.exist?(file)
         # Load YAML content
-        content = YAML.load_file(file)
+        content = YAML.load(File.read(file))
 
         # Symbolize keys
-        new_options = content.reduce({}) do |memo, (key, value)|
+        options_to_merge = content.reduce({}) do |memo, (key, value)|
           memo.merge! key.to_sym => value
         end
-
-        # And merge with existing options
-        options = options.merge(new_options)
       end
 
-      options
+      options_to_merge
     end
   end
 end

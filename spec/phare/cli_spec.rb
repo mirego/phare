@@ -6,6 +6,7 @@ describe Phare::CLI do
   let(:cli) { described_class.new(env, argv) }
   let(:argv) { [] }
   let(:run!) { cli.run }
+  let(:env) { {} }
 
   describe :run do
     context 'with code check skipping' do
@@ -34,5 +35,17 @@ describe Phare::CLI do
         it { expect { run! }.to exit_with_code(0) }
       end
     end
+  end
+
+  describe :parsed_options do
+    let(:parsed_options) { cli.send(:parsed_options, argv) }
+
+    before do
+      expect(cli).to receive(:parsed_options_from_yaml).and_return(skip: ['scsslint'])
+      expect(cli).to receive(:parsed_options_from_arguments).and_return(skip: ['rubocop'])
+    end
+
+    it { expect(parsed_options[:directory]).to eql Dir.pwd }
+    it { expect(parsed_options[:skip]).to eql [:rubocop] }
   end
 end
