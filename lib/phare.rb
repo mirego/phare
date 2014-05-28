@@ -1,5 +1,6 @@
 require 'English'
 require 'optparse'
+require 'yaml'
 require 'phare/version'
 
 require 'phare/cli'
