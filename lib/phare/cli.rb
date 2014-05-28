@@ -6,13 +6,7 @@ module Phare
     def initialize(env, argv)
       @env = env
       @argv = argv
-
-      @options = { directory: Dir.getwd }
-      @options = parse_options_from_yaml(@options)
-      @options = parse_options_from_arguments(@options)
-
-      @options[:skip].map!(&:to_sym) if @options[:skip]
-      @options[:only].map!(&:to_sym) if @options[:only]
+      @options = parsed_options
 
       @suite = Phare::CheckSuite.new(@options)
     end
@@ -42,6 +36,17 @@ module Phare
     end
 
   protected
+
+    def parsed_options
+      options = { directory: Dir.getwd }
+      options = parse_options_from_yaml(options)
+      options = parse_options_from_arguments(options)
+
+      options[:skip].map!(&:to_sym) if options[:skip]
+      options[:only].map!(&:to_sym) if options[:only]
+
+      options
+    end
 
     def parse_options_from_arguments(options)
       OptionParser.new do |opts|
