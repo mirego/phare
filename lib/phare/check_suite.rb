@@ -23,9 +23,9 @@ module Phare
       checks = DEFAULT_CHECKS.keys
 
       if @options[:only].any?
-        checks = checks & @options[:only]
+        checks &= @options[:only]
       elsif @options[:skip]
-        checks = checks - @options[:skip]
+        checks -= @options[:skip]
       else
         checks
       end

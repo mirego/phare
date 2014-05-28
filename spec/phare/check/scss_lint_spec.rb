@@ -7,7 +7,7 @@ describe Phare::Check::ScssLint do
     let(:check) { described_class.new('.') }
     before do
       expect(Phare).to receive(:system_output).with('which scss-lint').and_return(which_output)
-      allow(Dir).to receive(:exists?).with(check.path).and_return(path_exists?)
+      allow(Dir).to receive(:exist?).with(check.path).and_return(path_exists?)
     end
 
     context 'with found scss-lint command' do
