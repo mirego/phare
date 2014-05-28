@@ -37,11 +37,35 @@ Phare provides an executable named `phare`. You can just use it as is:
 $ phare
 ```
 
+### Version control hook
+
 One of the best ways to use Phare is by hooking it to your version control commit process. For example, with `git`:
 
 ```bash
 $ bundle binstubs phare
 $ ln -s "`pwd`/bin/phare" .git/hooks/pre-commit
+```
+
+### Options
+
+#### Command-line
+
+| Option      | Description
+|-------------|-------------------------------------------------------------------------------------------------------------------------
+| `directory` | The directory in which to run the checks (default is the current directory
+| `only`      | The specific checks to run (e.g. `--only=rubocup,jscs`)
+| `skip`      | The checks to skip (e.g. `--skip=scsslint`)
+
+#### `.phare.yml`
+
+Instead of using command-line arguments when running the `phare` command, you
+can create a `.phare.yml` file at the root of your project and hard-code options
+in that file.
+
+```yaml
+skip:
+  - scsslint
+  - jshint
 ```
 
 ## Contributors
