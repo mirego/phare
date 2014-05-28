@@ -10,14 +10,14 @@ module Phare
     end
 
     def changes
-      @changes ||= Phare.system_output('git status -s').split("\n").reduce([]) do |memo, diff|
+      @changes ||= Phare.system_output('git status -s').split("\n").each_with_object([]) do |diff, memo|
         filename = diff.split(' ').last
 
         if diff =~ /^[^D]{2}/ && @extensions.include?(File.extname(filename))
           memo << filename
+        else
+          next
         end
-
-        memo
       end
     end
   end

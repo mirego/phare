@@ -48,3 +48,6 @@ AssignmentInCondition:
 
 ClassAndModuleChildren:
   Enabled: false
+
+GuardClause:
+  Enabled: false
