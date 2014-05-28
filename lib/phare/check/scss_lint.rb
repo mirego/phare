@@ -27,7 +27,7 @@ module Phare
       end
 
       def arguments_exists?
-        @tree.changed? || Dir.exists?(@path)
+        @tree.changed? || Dir.exist?(@path)
       end
 
       def print_banner

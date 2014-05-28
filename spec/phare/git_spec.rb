@@ -41,7 +41,7 @@ describe Phare::Git do
     end
 
     context 'with untracked file' do
-      let(:tree) { "?? foo.rb" }
+      let(:tree) { '?? foo.rb' }
 
       it { expect(git.changes).to eq(['foo.rb']) }
     end

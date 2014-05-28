@@ -32,7 +32,7 @@ describe Phare::CheckSuite do
     end
 
     context 'with no failing check' do
-      let(:exit_status_proc) { proc { |index| 0 } }
+      let(:exit_status_proc) { proc { 0 } }
 
       it { expect { suite.run }.to change { suite.status }.to(0) }
     end

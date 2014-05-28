@@ -1,8 +1,6 @@
 AllCops:
-  Includes:
-    - Rakefile
-    - config.ru
-    - Gemfile
+  Include:
+    - phare.gemspec
 
 Documentation:
   Enabled: false
@@ -11,6 +9,9 @@ Encoding:
   Enabled: false
 
 LineLength:
+  Max: 200
+
+ClassLength:
   Max: 200
 
 AccessModifierIndentation:
@@ -42,8 +43,8 @@ Lambda:
 RegexpLiteral:
   Enabled: false
 
-RedundantBegin:
+AssignmentInCondition:
   Enabled: false
 
-AssignmentInCondition:
+ClassAndModuleChildren:
   Enabled: false

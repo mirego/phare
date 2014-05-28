@@ -2,7 +2,7 @@ module Phare
   class Check
     attr_reader :status, :command, :tree
 
-    def initialize(directory, options = {})
+    def initialize(_directory, options = {})
       @tree = Git.new(@extensions, options)
     end
 
@@ -28,11 +28,11 @@ module Phare
       should_run = binary_exists?
 
       [:configuration_exists?, :arguments_exists?].each do |condition|
-        should_run = should_run && send(condition) if respond_to?(condition, true)
+        should_run &&= send(condition) if respond_to?(condition, true)
       end
 
       if @options[:diff]
-        should_run = should_run && @tree.changed?
+        should_run &&= @tree.changed?
       end
 
       should_run

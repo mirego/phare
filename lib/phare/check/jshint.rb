@@ -29,11 +29,11 @@ module Phare
       end
 
       def configuration_exists?
-        File.exists?(@config)
+        File.exist?(@config)
       end
 
       def arguments_exists?
-        @tree.changed? || Dir.exists?(@path)
+        @tree.changed? || Dir.exist?(@path)
       end
 
       def print_banner
