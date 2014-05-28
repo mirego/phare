@@ -7,7 +7,7 @@ describe Phare::CLI do
   let(:argv) { [] }
   let(:run!) { cli.run }
 
-  describe :initialize do
+  describe :run do
     context 'with code check skipping' do
       let(:env) { { 'SKIP_CODE_CHECK' => '1' } }
       it { expect { run! }.to exit_with_code(0) }
