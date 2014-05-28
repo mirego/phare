@@ -5,8 +5,7 @@ module Phare
 
     def initialize(env, argv)
       @env = env
-      @argv = argv
-      @options = parsed_options
+      @options = parsed_options(argv)
 
       @suite = Phare::CheckSuite.new(@options)
     end
@@ -37,10 +36,10 @@ module Phare
 
   protected
 
-    def parsed_options
+    def parsed_options(argv)
       options = { directory: Dir.getwd }
       options = parse_options_from_yaml(options)
-      options = parse_options_from_arguments(options)
+      options = parse_options_from_arguments(options, argv)
 
       options[:skip].map!(&:to_sym) if options[:skip]
       options[:only].map!(&:to_sym) if options[:only]
@@ -48,7 +47,7 @@ module Phare
       options
     end
 
-    def parse_options_from_arguments(options)
+    def parse_options_from_arguments(options, argv)
       OptionParser.new do |opts|
         opts.banner = 'Usage: phare [options]'
 
@@ -68,7 +67,7 @@ module Phare
           options[:diff] = true
         end
 
-      end.parse! @argv
+      end.parse! argv
 
       options
     end
