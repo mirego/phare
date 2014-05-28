@@ -5,8 +5,8 @@
   <br />
   Phare looks into your files and check for coding style errors.
   <br /><br />
-  <a href="https://rubygems.org/gems/phare"><img src="https://badge.fury.io/rb/phare.png" /></a>
-  <a href="https://travis-ci.org/mirego/phare"><img src="https://travis-ci.org/mirego/phare.png?branch=master" /></a>
+  <a href="https://rubygems.org/gems/phare"><img src="http://img.shields.io/gem/v/phare.svg" /></a>
+  <a href="https://travis-ci.org/mirego/phare"><img src="http://img.shields.io/travis/mirego/phare.svg" /></a>
 </p>
 
 ## Installation
