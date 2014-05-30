@@ -31,7 +31,12 @@ module Phare
       options = { directory: Dir.getwd }
       options.merge! parsed_options_from_yaml(File.join(options[:directory], '.phare.yml'))
       options.merge! parsed_options_from_arguments(argv)
+      symbolize_options!(options)
 
+      options
+    end
+
+    def symbolize_options!(options)
       options[:skip].map!(&:to_sym) if options[:skip]
       options[:only].map!(&:to_sym) if options[:only]
 
