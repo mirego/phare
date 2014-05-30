@@ -25,9 +25,7 @@ module Phare
       end
 
       def print_banner
-        Phare.puts '----------------------------------------'
-        Phare.puts 'Running Rubocop to check for Ruby style…'
-        Phare.puts '----------------------------------------'
+        Phare.banner 'Running Rubocop to check for Ruby style…'
       end
     end
   end

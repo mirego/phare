@@ -31,9 +31,7 @@ module Phare
       end
 
       def print_banner
-        Phare.puts '------------------------------------------'
-        Phare.puts 'Running SCSS-Lint to check for SCSS style…'
-        Phare.puts '------------------------------------------'
+        Phare.banner 'Running SCSS-Lint to check for SCSS style…'
       end
     end
   end

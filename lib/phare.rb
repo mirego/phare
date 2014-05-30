@@ -30,4 +30,10 @@ module Phare
   def self.puts(*args)
     STDOUT.puts(*args)
   end
+
+  def self.banner(string)
+    Phare.puts '-' * string.length
+    Phare.puts string
+    Phare.puts '-' * string.length
+  end
 end

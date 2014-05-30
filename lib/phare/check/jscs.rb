@@ -36,9 +36,7 @@ module Phare
       end
 
       def print_banner
-        Phare.puts '---------------------------------------------'
-        Phare.puts 'Running JSCS to check for JavaScript style…'
-        Phare.puts '---------------------------------------------'
+        Phare.banner 'Running JSCS to check for JavaScript style…'
       end
     end
   end
