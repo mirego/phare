@@ -6,7 +6,7 @@ module Phare
 
       def initialize(directory, options = {})
         @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
-        @extensions = %w(.css .scss)
+        @extensions = %w(.scss)
         @options = options
 
         super
