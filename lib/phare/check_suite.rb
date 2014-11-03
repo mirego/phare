@@ -25,7 +25,7 @@ module Phare
       if @options[:only].any?
         checks &= @options[:only]
       elsif @options[:skip]
-        checks -= @options[:skip]
+        checks - @options[:skip]
       else
         checks
       end
