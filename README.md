@@ -47,6 +47,15 @@ $ bundle binstubs phare
 $ ln -s "`pwd`/bin/phare" .git/hooks/pre-commit
 ```
 
+That way, every time `git commit` is ran, `phare` will be executed and the
+commit will be aborted if there are some errors. However, you can skip this
+check altogether by specifying `SKIP_PHARE=1` before your command.
+
+```bash
+$ git commit -m 'Add stuff'
+$ SKIP_PHARE=1 git commit -m 'Add stuff and I don’t care about Phare'
+```
+
 ### Options
 
 #### Command-line

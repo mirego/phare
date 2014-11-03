@@ -11,7 +11,7 @@ module Phare
     end
 
     def run
-      if @env['SKIP_CODE_CHECK']
+      if @env['SKIP_CODE_CHECK'] || @env['SKIP_PHARE']
         Phare.banner 'Skipping code style checking… Really? Well alright then…'
         exit 0
       else
