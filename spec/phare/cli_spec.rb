@@ -9,8 +9,13 @@ describe Phare::CLI do
   let(:env) { {} }
 
   describe :run do
-    context 'with code check skipping' do
+    context 'with legacy code check skipping' do
       let(:env) { { 'SKIP_CODE_CHECK' => '1' } }
+      it { expect { run! }.to exit_with_code(0) }
+    end
+
+    context 'with code check skipping' do
+      let(:env) { { 'SKIP_PHARE' => '1' } }
       it { expect { run! }.to exit_with_code(0) }
     end
 
