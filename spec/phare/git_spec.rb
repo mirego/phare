@@ -12,7 +12,7 @@ describe Phare::Git do
       before { expect(git).to receive(:changes).and_return(changes) }
 
       context 'with changes' do
-        let(:changes) { ['foo.rb'] }
+        let(:changes) { %w(foo.rb) }
 
         it { expect(git.changed?).to eq(true) }
       end
@@ -37,31 +37,31 @@ describe Phare::Git do
     context 'with empty tree' do
       let(:tree) { '' }
 
-      it { expect(git.changes).to eq([]) }
+      it { expect(git.changes).to be_empty }
     end
 
     context 'with untracked file' do
       let(:tree) { '?? foo.rb' }
 
-      it { expect(git.changes).to eq(['foo.rb']) }
+      it { expect(git.changes).to be_empty }
     end
 
     context 'with added file' do
       let(:tree) { "A  foo.rb\nAM bar.rb" }
 
-      it { expect(git.changes).to eq(['foo.rb', 'bar.rb']) }
+      it { expect(git.changes).to match_array(%w(foo.rb bar.rb)) }
     end
 
     context 'with modified file' do
-      let(:tree) { "M  foo.rb\nDM bar.rb" }
+      let(:tree) { "M  foo.rb\nDM bar.rb\n M foobar.rb" }
 
-      it { expect(git.changes).to eq(['foo.rb']) }
+      it { expect(git.changes).to match_array(%w(foo.rb)) }
     end
 
     context 'with deleted file' do
-      let(:tree) { " D foo.rb\nMD bar.rb" }
+      let(:tree) { " D foo.rb\nMD bar.rb\n D foobar.rb" }
 
-      it { expect(git.changes).to eq([]) }
+      it { expect(git.changes).to match_array(%w(bar.rb)) }
     end
   end
 end

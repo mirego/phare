@@ -13,7 +13,7 @@ module Phare
       @changes ||= Phare.system_output('git status -s').split("\n").each_with_object([]) do |diff, memo|
         filename = diff.split(' ').last
 
-        if diff =~ /^[^D]{2}/ && @extensions.include?(File.extname(filename))
+        if diff =~ /^[A|M].*/ && @extensions.include?(File.extname(filename))
           memo << filename
         else
           next
