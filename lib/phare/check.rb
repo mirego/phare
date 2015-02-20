@@ -40,6 +40,10 @@ module Phare
 
   protected
 
+    def files_to_check
+      @tree.changes - excluded_files
+    end
+
     def print_success_message
       Phare.puts('Everything looks good from here!')
     end

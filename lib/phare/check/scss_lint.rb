@@ -22,6 +22,10 @@ module Phare
 
     protected
 
+      def excluded_files
+        [] # TODO: Fetch the exclude list from .scss-lint.yml
+      end
+
       def binary_exists?
         !Phare.system_output('which scss-lint').empty?
       end
