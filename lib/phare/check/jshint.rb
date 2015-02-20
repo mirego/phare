@@ -24,6 +24,10 @@ module Phare
 
     protected
 
+      def excluded_files
+        [] # TODO: Fetch the exclude list from .jshintignore
+      end
+
       def binary_exists?
         !Phare.system_output('which jshint').empty?
       end

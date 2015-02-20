@@ -23,6 +23,10 @@ module Phare
 
     protected
 
+      def excluded_files
+        [] # TODO: Fetch the exclude list from .jscs.json
+      end
+
       def binary_exists?
         !Phare.system_output('which jscs').empty?
       end
