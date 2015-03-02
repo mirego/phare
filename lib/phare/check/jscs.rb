@@ -15,7 +15,7 @@ module Phare
 
       def command
         if @tree.changed?
-          "jscs #{@tree.changes.join(' ')}"
+          "jscs #{files_to_check.join(' ')}"
         else
           "jscs #{@path}"
         end
@@ -24,7 +24,13 @@ module Phare
     protected
 
       def excluded_files
-        [] # TODO: Fetch the exclude list from .jscs.json
+        return [] unless configuration_file['excludeFiles']
+
+        configuration_file['excludeFiles'].flat_map { |path| Dir.glob(path) }
+      end
+
+      def configuration_file
+        @configuration_file ||= File.exist?('.jscs.json') ? JSON.parse(File.open('.jscs.json')) : {}
       end
 
       def binary_exists?

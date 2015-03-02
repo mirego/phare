@@ -16,7 +16,7 @@ module Phare
 
       def command
         if @tree.changed?
-          "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{@tree.changes.join(' ')}"
+          "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{files_to_check.join(' ')}"
         else
           "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{@glob}"
         end
@@ -25,7 +25,13 @@ module Phare
     protected
 
       def excluded_files
-        [] # TODO: Fetch the exclude list from .jshintignore
+        return [] unless configuration_file
+
+        configuration_file.split("\n").flat_map { |path| Dir.glob(path) }
+      end
+
+      def configuration_file
+        @configuration_file ||= File.exist?('.jshintignore') ? File.open('.jshintignore') : false
       end
 
       def binary_exists?
