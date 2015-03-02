@@ -32,7 +32,10 @@ module Phare
       end
 
       if @options[:diff]
-        should_run &&= @tree.changed?
+        # NOTE: If the tree hasn't changed or if there is no files
+        #       to check (e.g. they are all in the exclude list),
+        #       we skip the check.
+        should_run &&= @tree.changed? && files_to_check.any?
       end
 
       should_run
@@ -41,7 +44,7 @@ module Phare
   protected
 
     def files_to_check
-      @tree.changes - excluded_files
+      @files_to_check ||= @tree.changes - excluded_files
     end
 
     def print_success_message
