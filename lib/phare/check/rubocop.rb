@@ -20,10 +20,8 @@ module Phare
 
     protected
 
-      def excluded_files
-        return [] unless configuration_file['AllCops'] && configuration_file['AllCops']['Exclude']
-
-        configuration_file['AllCops']['Exclude'].flat_map { |path| Dir.glob(path) }
+      def excluded_list
+        configuration_file['AllCops']['Exclude'] if configuration_file['AllCops'] && configuration_file['AllCops']['Exclude']
       end
 
       def configuration_file

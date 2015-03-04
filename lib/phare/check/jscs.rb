@@ -26,10 +26,8 @@ module Phare
 
     protected
 
-      def excluded_files
-        return [] unless configuration_file['excludeFiles']
-
-        configuration_file['excludeFiles'].flat_map { |path| Dir.glob(path) }
+      def excluded_list
+        configuration_file['excludeFiles']
       end
 
       def configuration_file

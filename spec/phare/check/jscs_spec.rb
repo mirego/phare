@@ -5,6 +5,7 @@ describe Phare::Check::JSCS do
 
   describe :should_run? do
     let(:check) { described_class.new('.') }
+
     before do
       expect(Phare).to receive(:system_output).with('which jscs').and_return(which_output)
       allow(File).to receive(:exist?).with(check.config).and_return(config_exists?)
@@ -15,7 +16,20 @@ describe Phare::Check::JSCS do
       let(:which_output) { 'jscs' }
       let(:config_exists?) { true }
       let(:path_exists?) { true }
+
       it { expect(check).to be_able_to_run }
+
+      context 'with only excluded files and the --diff option' do
+        let(:check) { described_class.new('.', diff: true) }
+        let(:files) { ['foo.js'] }
+
+        before do
+          expect(check).to receive(:excluded_files).and_return(files).once
+          expect(check.tree).to receive(:changes).and_return(files).at_least(:once)
+        end
+
+        it { expect(check.should_run?).to be_falsey }
+      end
     end
 
     context 'with unfound jscs command' do
@@ -24,7 +38,6 @@ describe Phare::Check::JSCS do
       let(:path_exists?) { false }
       it { expect(check).to_not be_able_to_run }
     end
-
   end
 
   describe :run do
@@ -54,13 +67,30 @@ describe Phare::Check::JSCS do
 
       context 'with --diff option' do
         let(:check) { described_class.new('.', diff: true) }
-        let(:files) { ['foo.js', 'bar.js'] }
-        let(:command) { "jscs #{files.join(' ')}" }
+        let(:files) { ['app/foo.js', 'bar.js'] }
         let(:jscs_exit_status) { 1337 }
 
-        before { expect(check.tree).to receive(:changes).and_return(files).at_least(:once) }
+        context 'without exclusions' do
+          let(:command) { "jscs #{files.join(' ')}" }
 
-        it { expect { run! }.to change { check.status }.to(jscs_exit_status) }
+          before do
+            expect(check.tree).to receive(:changes).and_return(files).at_least(:once)
+            expect(check).to receive(:excluded_files).and_return([]).once
+          end
+
+          it { expect { run! }.to change { check.status }.to(jscs_exit_status) }
+        end
+
+        context 'with exclusions' do
+          let(:command) { 'jscs bar.js' }
+
+          before do
+            expect(check).to receive(:excluded_files).and_return(['app/foo.js']).once
+            expect(check.tree).to receive(:changes).and_return(files).at_least(:once)
+          end
+
+          it { expect { run! }.to change { check.status }.to(jscs_exit_status) }
+        end
       end
     end
 
