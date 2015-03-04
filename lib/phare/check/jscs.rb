@@ -1,4 +1,7 @@
 # encoding: utf-8
+
+require 'json'
+
 module Phare
   class Check
     class JSCS < Check
