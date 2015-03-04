@@ -33,7 +33,7 @@ module Phare
       end
 
       def configuration_file
-        @configuration_file ||= File.exist?('.jscs.json') ? JSON.parse(File.open('.jscs.json')) : {}
+        @configuration_file ||= File.exist?('.jscs.json') ? JSON.parse(File.read('.jscs.json')) : {}
       end
 
       def binary_exists?
