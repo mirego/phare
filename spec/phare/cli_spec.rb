@@ -9,6 +9,16 @@ describe Phare::CLI do
   let(:env) { {} }
 
   describe :run do
+    context 'with version flag' do
+      let(:cli) { described_class.new(env, ['--version']) }
+
+      before do
+        expect(Phare).to receive(:puts).with Phare::VERSION
+      end
+
+      it { expect { run! }.to exit_with_code(0) }
+    end
+
     context 'with legacy code check skipping' do
       let(:env) { { 'SKIP_CODE_CHECK' => '1' } }
       it { expect { run! }.to exit_with_code(0) }
