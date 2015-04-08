@@ -11,17 +11,14 @@ module Phare
     end
 
     def run
-      if @env['SKIP_CODE_CHECK'] || @env['SKIP_PHARE']
+      if @options[:version]
+        Phare.puts Phare::VERSION
+        exit 0
+      elsif @env['SKIP_CODE_CHECK'] || @env['SKIP_PHARE']
         Phare.banner 'Skipping code style checking… Really? Well alright then…'
         exit 0
       else
-        if @suite.tap(&:run).status == 0
-          Phare.banner 'Everything looks good, keep on committing!'
-          exit 0
-        else
-          Phare.banner 'Something’s wrong with your code style. Please fix it before committing.'
-          exit 1
-        end
+        exit run_suite
       end
     end
 
@@ -43,11 +40,16 @@ module Phare
       options
     end
 
+    # rubocop:disable Metrics/AbcSize
     def parsed_options_from_arguments(argv)
       options_to_merge = {}
 
       OptionParser.new do |opts|
         opts.banner = 'Usage: phare [options]'
+
+        opts.on('--version', 'Display Phare’s version') do
+          options_to_merge[:version] = true
+        end
 
         opts.on('--directory', 'The directory in which to run the checks (default is the current directory') do |directory|
           options_to_merge[:directory] = directory
@@ -64,11 +66,11 @@ module Phare
         opts.on('--diff', 'Only run checks on modified files') do
           options_to_merge[:diff] = true
         end
-
       end.parse! argv
 
       options_to_merge
     end
+    # rubocop:enable Metrics/AbcSize
 
     def parsed_options_from_yaml(file)
       options_to_merge = {}
@@ -84,6 +86,16 @@ module Phare
       end
 
       options_to_merge
+    end
+
+    def run_suite
+      if @suite.tap(&:run).status == 0
+        Phare.banner 'Everything looks good, keep on committing!'
+        0
+      else
+        Phare.banner 'Something’s wrong with your code style. Please fix it before committing.'
+        1
+      end
     end
   end
 end
