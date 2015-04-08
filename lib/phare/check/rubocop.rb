@@ -12,13 +12,21 @@ module Phare
 
       def command
         if @tree.changed?
-          "rubocop #{@tree.changes.join(' ')}"
+          "rubocop #{files_to_check.join(' ')}"
         else
           'rubocop'
         end
       end
 
     protected
+
+      def excluded_list
+        configuration_file['AllCops']['Exclude'] if configuration_file['AllCops'] && configuration_file['AllCops']['Exclude']
+      end
+
+      def configuration_file
+        @configuration_file ||= File.exist?('.rubocop.yml') ? YAML::load(File.open('.rubocop.yml')) : {}
+      end
 
       def binary_exists?
         !Phare.system_output('which rubocop').empty?

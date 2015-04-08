@@ -10,6 +10,18 @@ describe Phare::Check::Rubocop do
     context 'with found rubocop command' do
       let(:which_output) { 'rubocop' }
       it { expect(check).to be_able_to_run }
+
+      context 'with only excluded files and the --diff option' do
+        let(:check) { described_class.new('.', diff: true) }
+        let(:files) { ['foo.rb'] }
+
+        before do
+          expect(check).to receive(:excluded_files).and_return(files).once
+          expect(check.tree).to receive(:changes).and_return(files).at_least(:once)
+        end
+
+        it { expect(check.should_run?).to be_falsey }
+      end
     end
 
     context 'with unfound rubocop command' do
@@ -46,12 +58,29 @@ describe Phare::Check::Rubocop do
       context 'with --diff option' do
         let(:check) { described_class.new('.', diff: true) }
         let(:files) { ['foo.rb', 'bar.rb'] }
-        let(:command) { "rubocop #{files.join(' ')}" }
         let(:rubocop_exit_status) { 1337 }
 
-        before { expect(check.tree).to receive(:changes).and_return(files).at_least(:once) }
+        context 'without exclusions' do
+          let(:command) { "rubocop #{files.join(' ')}" }
 
-        it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
+          before do
+            expect(check.tree).to receive(:changes).and_return(files).at_least(:once)
+            expect(check).to receive(:excluded_files).and_return([]).once
+          end
+
+          it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
+        end
+
+        context 'with exclusions' do
+          let(:command) { 'rubocop bar.rb' }
+
+          before do
+            expect(check).to receive(:excluded_files).and_return(['foo.rb']).once
+            expect(check.tree).to receive(:changes).and_return(files).at_least(:once)
+          end
+
+          it { expect { run! }.to change { check.status }.to(rubocop_exit_status) }
+        end
       end
     end
 

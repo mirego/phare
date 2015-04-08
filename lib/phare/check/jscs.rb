@@ -1,4 +1,7 @@
 # encoding: utf-8
+
+require 'json'
+
 module Phare
   class Check
     class JSCS < Check
@@ -15,13 +18,21 @@ module Phare
 
       def command
         if @tree.changed?
-          "jscs #{@tree.changes.join(' ')}"
+          "jscs #{files_to_check.join(' ')}"
         else
           "jscs #{@path}"
         end
       end
 
     protected
+
+      def excluded_list
+        configuration_file['excludeFiles']
+      end
+
+      def configuration_file
+        @configuration_file ||= File.exist?('.jscs.json') ? JSON.parse(File.read('.jscs.json')) : {}
+      end
 
       def binary_exists?
         !Phare.system_output('which jscs').empty?

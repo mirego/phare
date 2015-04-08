@@ -14,13 +14,21 @@ module Phare
 
       def command
         if @tree.changed?
-          "scss-lint #{@tree.changes.join(' ')}"
+          "scss-lint #{files_to_check.join(' ')}"
         else
           "scss-lint #{@path}"
         end
       end
 
     protected
+
+      def excluded_list
+        configuration_file['exclude']
+      end
+
+      def configuration_file
+        @configuration_file ||= File.exist?('.scss-lint.yml') ? YAML::load(File.open('.scss-lint.yml')) : {}
+      end
 
       def binary_exists?
         !Phare.system_output('which scss-lint').empty?
