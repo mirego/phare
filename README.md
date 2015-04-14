@@ -12,7 +12,7 @@
 
 ## Installation
 
-Add these lines to your application’s Gemfile as development dependancies:
+Add these lines to your application’s `Gemfile` as development dependencies:
 
 ```ruby
 group :development do
@@ -23,11 +23,47 @@ group :development do
 end
 ```
 
+```shell
+$ bundle install
+```
 
-If you wish to check for JavaScript code style using JSHint and JSCS, you must install them too:
+If you wish to check for JavaScript code style using JSHint and JSCS, you must
+specify them in your `package.json` file:
 
-```bash
-$ npm install -g jshint jscs
+```json
+{
+  "name": "foo",
+  "version": "0.0.1",
+  "devDependencies": {
+    "jshint": "latest",
+    "jscs": "latest"
+  }
+}
+```
+
+```shell
+$ npm install
+```
+
+### Shims
+
+Phare uses top-level commands in its checks (eg. `$ rubocop` and not `$ bundle exec rubocop`).
+You’ll need to run these commands in order to use the shims provided by either
+Bundler or NPM.
+
+#### Bundler
+
+```shell
+$ bundle install
+$ bundle binstub rubocop scss-lint
+$ export PATH="./bin:$PATH"
+```
+
+#### npm
+
+```shell
+$ npm install
+$ export PATH="./node_modules/.bin:$PATH"
 ```
 
 ## Usage
@@ -40,7 +76,8 @@ $ phare
 
 ### Version control hook
 
-One of the best ways to use Phare is by hooking it to your version control commit process. For example, with `git`:
+One of the best ways to use Phare is by hooking it to your version control
+commit process. For example, with `git`:
 
 ```bash
 $ bundle binstubs phare
