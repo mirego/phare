@@ -51,7 +51,7 @@ module Phare
           options_to_merge[:version] = true
         end
 
-        opts.on('--directory', 'The directory in which to run the checks (default is the current directory') do |directory|
+        opts.on('--directory x', 'The directory in which to run the checks (default is the current directory') do |directory|
           options_to_merge[:directory] = directory
         end
 
