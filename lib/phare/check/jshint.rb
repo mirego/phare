@@ -29,7 +29,7 @@ module Phare
       end
 
       def configuration_file
-        @configuration_file ||= File.exist?('.jshintignore') ? File.open('.jshintignore') : false
+        @configuration_file ||= File.exist?('.jshintignore') ? File.read('.jshintignore') : false
       end
 
       def binary_exists?
