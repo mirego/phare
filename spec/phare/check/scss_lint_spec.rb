@@ -5,9 +5,10 @@ describe Phare::Check::ScssLint do
 
   describe :should_run? do
     let(:check) { described_class.new('.') }
+
     before do
       expect(Phare).to receive(:system_output).with('which scss-lint').and_return(which_output)
-      allow(Dir).to receive(:exist?).with(check.path).and_return(path_exists?)
+      allow(Dir).to receive(:exist?).with(check.send(:expanded_path)).and_return(path_exists?)
     end
 
     context 'with found scss-lint command' do
@@ -32,6 +33,34 @@ describe Phare::Check::ScssLint do
       let(:which_output) { '' }
       let(:path_exists?) { false }
       it { expect(check).to_not be_able_to_run }
+    end
+  end
+
+  describe :path do
+    let(:check) { described_class.new('.') }
+
+    before { expect(check).to receive(:configuration_file).and_return(configuration) }
+
+    context 'with `scss_files` specified' do
+      let(:configuration) { { 'scss_files' => scss_files } }
+
+      context 'as a String' do
+        let(:scss_files) { 'src/stylesheets/**/*.scss' }
+
+        it { expect(check.send(:path)).to eql(scss_files) }
+      end
+
+      context 'as an Array' do
+        let(:scss_files) { ['src/stylesheets/**/*.scss', 'vendor/**/*.scss'] }
+
+        it { expect(check.send(:path)).to eql(scss_files.join(' ')) }
+      end
+    end
+
+    context 'without `scss_files` specified' do
+      let(:configuration) { {} }
+
+      it { expect(check.send(:path)).to eql(Phare::Check::ScssLint::DEFAULT_PATH) }
     end
   end
 

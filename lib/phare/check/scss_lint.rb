@@ -2,10 +2,14 @@
 module Phare
   class Check
     class ScssLint < Check
+      # Constants
+      DEFAULT_PATH = 'app/assets/stylesheets'.freeze
+
+      # Accessors
       attr_reader :path
 
       def initialize(directory, options = {})
-        @path = File.expand_path("#{directory}app/assets/stylesheets", __FILE__)
+        @directory = directory
         @extensions = %w(.scss)
         @options = options
 
@@ -16,11 +20,27 @@ module Phare
         if @tree.changed?
           "scss-lint #{files_to_check.join(' ')}"
         else
-          "scss-lint #{@path}"
+          "scss-lint #{expanded_path}"
         end
       end
 
     protected
+
+      def expanded_path
+        File.expand_path(@directory + path, __FILE__)
+      end
+
+      def path
+        scss_files = configuration_file['scss_files']
+
+        return DEFAULT_PATH unless scss_files
+
+        if scss_files.respond_to?(:join)
+          scss_files.join(' ')
+        else
+          scss_files
+        end
+      end
 
       def excluded_list
         configuration_file['exclude']
@@ -35,7 +55,7 @@ module Phare
       end
 
       def arguments_exists?
-        @tree.changed? || Dir.exist?(@path)
+        @tree.changed? || Dir.exist?(expanded_path)
       end
 
       def print_banner
