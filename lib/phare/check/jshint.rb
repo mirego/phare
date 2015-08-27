@@ -6,8 +6,7 @@ module Phare
 
       def initialize(directory, options = {})
         @config = File.expand_path("#{directory}.jshintrc", __FILE__)
-        @path = File.expand_path("#{directory}app/assets/javascripts", __FILE__)
-        @glob = File.join(@path, '**/*')
+        @path = '.'
         @extensions = %w(.js .es6)
         @options = options
 
@@ -16,9 +15,9 @@ module Phare
 
       def command
         if @tree.changed?
-          "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{files_to_check.join(' ')}"
+          "jshint --extra-ext #{@extensions.join(',')} #{files_to_check.join(' ')}"
         else
-          "jshint --config #{@config} --extra-ext #{@extensions.join(',')} #{@glob}"
+          "jshint --extra-ext #{@extensions.join(',')} #{@path}"
         end
       end
 
