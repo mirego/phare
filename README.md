@@ -122,7 +122,7 @@ skip:
 
 ## License
 
-`Phare` is © 2014 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/phare/blob/master/LICENSE.md) file.
+`Phare` is © 2014-2015 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/phare/blob/master/LICENSE.md) file.
 
 The lighthouse logo is based on [this lovely icon](http://thenounproject.com/term/lighthouse/11608/) by [Nick Lacke](http://thenounproject.com/nicklacke), from The Noun Project.
 
