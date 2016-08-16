@@ -3,7 +3,6 @@ language: ruby
 rvm:
   - 2.1.1
   - 2.0.0
-  - 1.9.3
 
 script:
   - 'echo "Checking code style" && ./bin/phare'

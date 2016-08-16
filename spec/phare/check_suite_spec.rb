@@ -50,7 +50,7 @@ describe Phare::CheckSuite do
     end
 
     context 'with "skip" option' do
-      let(:skip) { [:scsslint, :foo, :jshint] }
+      let(:skip) { [:scsslint, :stylelint, :foo, :jshint] }
       it { expect(suite.checks).to eql [:rubocop, :jscs] }
     end
 
