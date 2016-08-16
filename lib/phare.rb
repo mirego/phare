@@ -9,6 +9,7 @@ require 'phare/git'
 require 'phare/check'
 require 'phare/check/rubocop'
 require 'phare/check/scss_lint'
+require 'phare/check/stylelint'
 require 'phare/check/jshint'
 require 'phare/check/jscs'
 

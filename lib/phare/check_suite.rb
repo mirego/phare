@@ -5,6 +5,7 @@ module Phare
     DEFAULT_CHECKS = {
       rubocop: Check::Rubocop,
       scsslint: Check::ScssLint,
+      stylelint: Check::Stylelint,
       jshint: Check::JSHint,
       jscs: Check::JSCS
     }
