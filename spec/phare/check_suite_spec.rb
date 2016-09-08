@@ -45,19 +45,19 @@ describe Phare::CheckSuite do
     let(:only) { [] }
 
     context 'with "only" option' do
-      let(:only) { [:rubocop, :foo, :jshint] }
-      it { expect(suite.checks).to eql [:rubocop, :jshint] }
+      let(:only) { [:rubocop, :foo, :eslint] }
+      it { expect(suite.checks).to eql [:rubocop, :eslint] }
     end
 
     context 'with "skip" option' do
-      let(:skip) { [:scsslint, :stylelint, :foo, :jshint, :eslint] }
-      it { expect(suite.checks).to eql [:rubocop, :jscs] }
+      let(:skip) { [:stylelint, :foo] }
+      it { expect(suite.checks).to eql [:rubocop, :eslint] }
     end
 
     context 'with both "only" and "skip" option' do
-      let(:skip) { [:scsslint, :rubocop] }
-      let(:only) { [:scsslint, :foo, :jshint] }
-      it { expect(suite.checks).to eql [:scsslint, :jshint] }
+      let(:skip) { [:stylelint, :rubocop] }
+      let(:only) { [:stylelint, :foo, :eslint] }
+      it { expect(suite.checks).to eql [:stylelint, :eslint] }
     end
 
     context 'with both "only" and "skip" option' do
