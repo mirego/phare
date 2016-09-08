@@ -7,7 +7,8 @@ module Phare
       scsslint: Check::ScssLint,
       stylelint: Check::Stylelint,
       jshint: Check::JSHint,
-      jscs: Check::JSCS
+      jscs: Check::JSCS,
+      eslint: Check::Eslint
     }
 
     def initialize(options = {})
