@@ -12,6 +12,7 @@ require 'phare/check/scss_lint'
 require 'phare/check/stylelint'
 require 'phare/check/jshint'
 require 'phare/check/jscs'
+require 'phare/check/eslint'
 
 require 'phare/check_suite'
 
