@@ -47,6 +47,10 @@ module Phare
       @excluded_files ||= [Dir.glob(excluded_list || [])].flatten
     end
 
+    def excluded_list
+      [] # Should be overriden by children
+    end
+
     def files_to_check
       @files_to_check ||= @tree.changes - excluded_files
     end
