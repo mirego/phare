@@ -100,7 +100,7 @@ $ SKIP_PHARE=1 git commit -m 'Add stuff and I don’t care about Phare'
 | Option      | Description
 |-------------|-------------------------------------------------------------------------------------------------------------------------
 | `directory` | The directory in which to run the checks (default is the current directory
-| `only`      | The specific checks to run (e.g. `--only=rubocup,jscs`)
+| `only`      | The specific checks to run (e.g. `--only=rubocop,jscs`)
 | `skip`      | The checks to skip (e.g. `--skip=scsslint`)
 
 #### `.phare.yml`
